@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS destistry;
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'ngoclam1998';

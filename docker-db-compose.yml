@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql
+    container_name: dentistry_mysql
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_DB_NAME=${DATABASE_DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - 3307:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - .mysql-data:/var/lib/mysql
+    cap_add:
+      - SYS_NICE # CAP_SYS_NICE

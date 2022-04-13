@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: .
+    container_name: tranning_nest_api
+    environment:
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
