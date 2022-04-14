@@ -3,5 +3,6 @@ export default (): Record<string, any> => ({
     googleSecret: process.env.GOOGLE_SECRET,
     githubClient: process.env.GITHUB_CLIENT_ID,
     githubSecret: process.env.GITHUB_SECRET,
-    jwtSecret: process.env.SECRET_KEY
+    jwtSecret: process.env.SECRET_KEY,
+    jwtExpiresIn: process.env.EXPRIES_IN
 });

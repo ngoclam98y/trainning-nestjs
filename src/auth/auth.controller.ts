@@ -1,12 +1,21 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
+import { AuthDto } from './dto/auth.dto';
+import { ResponseLogin } from './dto/responseLogin.dto';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
 
+
+  @Post('/jwt')
+  login(@Body() authDto: AuthDto): Promise<ResponseLogin> {
+    return this.authService.login(authDto);
+  }
 
   /*Login Google*/
   @Get("/login-google")

@@ -15,7 +15,7 @@ export class User extends BaseEntity {
     email: string
 
     @Column()
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     password: string;
 
     @Column()
@@ -36,12 +36,14 @@ export class User extends BaseEntity {
     @Column({
         nullable: true
     })
+    @Exclude({ toPlainOnly: true })
     resetPasswordToken: string;
 
 
     @Column({
         nullable: true
     })
+    @Exclude({ toPlainOnly: true })
     resetPasswordExpires: Date;
 
     @Column({
@@ -49,6 +51,7 @@ export class User extends BaseEntity {
         enum: Roles,
         default: [Roles.User]
     })
+    @Exclude({ toPlainOnly: true })
     roles: Roles;
 
     @Column({
@@ -56,6 +59,7 @@ export class User extends BaseEntity {
         enum: Permission,
         default: []
     })
+    @Exclude({ toPlainOnly: true })
     permissions: Permission[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

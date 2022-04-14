@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { forwardRef, HttpException, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { randomBytes } from 'crypto';
 import { UserService } from '../user/user.service';
@@ -24,7 +24,7 @@ export class MailService {
         context
       })
     } catch (error) {
-      throw new HttpException(`request reset password is error ${JSON.stringify(error)}`, 500);
+      throw new HttpException(`request reset password is error ${JSON.stringify(error)}`, HttpStatus.BAD_GATEWAY);
     }
   }
 
@@ -33,7 +33,7 @@ export class MailService {
     try {
       const user = await this.userService.findByEmail(resetMailDto);
       if (!user) {
-        throw new HttpException('Email is incorrect', 400);
+        throw new HttpException('Email is incorrect', HttpStatus.BAD_REQUEST);
       }
       const update = {
         resetPasswordToken: randomBytes(20).toString('hex'),
@@ -59,7 +59,7 @@ export class MailService {
         message: 'A reset email has been sent to ' + resetMailDto.email
       }
     } catch (error) {
-      throw new HttpException(`request reset password is error ${JSON.stringify(error)}`, 500);
+      throw new HttpException(`request reset password is error ${JSON.stringify(error)}`, HttpStatus.BAD_GATEWAY);
     }
   }
 }

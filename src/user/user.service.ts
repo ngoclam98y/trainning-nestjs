@@ -1,4 +1,4 @@
-import { forwardRef, HttpException, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { BaseService } from '../../base.service';
 import { LoggerService } from '../../logger/custom.logger';
 import { ResetMailDto } from '../mail/dto/resetMail.dto';
@@ -31,15 +31,15 @@ export class UserService extends BaseService<User, UserRepository> {
             const result = await this.repository.updatePassword(token, resetPasswordDto);
             if (result) {
                 this.mailService.sendMailService({
-                    to: 'ngoclam.sn98@gmail.com', subject: 'reset password is success !', context: {
-
-                    },
+                    to: 'ngoclam.sn98@gmail.com',
+                    subject: 'reset password is success !',
+                    context: {},
                     template: "reset-password-success"
                 })
             }
             return result;
         } catch (error) {
-            throw new HttpException(`update reset password is error ${JSON.stringify(error)}`, 500);
+            throw new HttpException(`update reset password is error ${JSON.stringify(error)}`, HttpStatus.BAD_GATEWAY);
         }
 
     }
