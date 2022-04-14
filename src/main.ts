@@ -6,12 +6,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-
   app.useGlobalPipes(new ValidationPipe());
 
-  app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(app.get(Reflector))
-  );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  app.enableCors();
 
   const configService = app.get<ConfigService>(ConfigService);
 
@@ -29,7 +28,7 @@ async function bootstrap() {
         bearerFormat: 'Bearer', // I`ve tested not to use this field, but the result was the same
         scheme: 'Bearer',
         type: 'http', // I`ve attempted type: 'apiKey' too
-        in: 'Header'
+        in: 'Header',
       },
       'access_token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
